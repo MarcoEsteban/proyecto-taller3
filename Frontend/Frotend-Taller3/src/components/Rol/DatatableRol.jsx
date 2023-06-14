@@ -16,6 +16,7 @@ import { rankItem } from "@tanstack/match-sorter-utils";
 import Filter from '../Filter';
 import Buton from '../Buton';
 import Pagination from '../Pagination';
+import { ROL } from '../../data/Data';
 
 
 //TODO ----------------------------
@@ -32,7 +33,7 @@ const DatatableRol = ({ link }) => {
     const { handleListData, handleDeleteData } = useContext(rolContext);
 
     /*************************** 1.- CONFIG HOOKS *****************************/
-    const [rol, setRol] = useState([]);
+    const [rol, setRol] = useState(ROL);
     const [id, setId] = useState(0);
     const [globalFilter, setGlobalFilter] = useState('');
     const navigate = useNavigate();
@@ -49,7 +50,7 @@ const DatatableRol = ({ link }) => {
             }
         }
         loadRol();
-    }, [])
+    }, [id, ROL])
 
     const deleteRol = async (id) => {
         try {
@@ -59,7 +60,6 @@ const DatatableRol = ({ link }) => {
             console.error(error)
         }
     }
-    console.log(id)
 
 
     /*************** 3.- CONFIG THE TABLE FOR DATATABLE ***********************/
@@ -75,13 +75,12 @@ const DatatableRol = ({ link }) => {
         {
             accessorKey: 'Editar',
             header: () => <span>Editar</span>,
-            cell: ({ row }) => <button onClick={() => console.log(row.original, row.original.id_rol)} className='py-1 bg-secundary-500 hover:bg-secundary-500/90 rounded-lg px-3 w-auto m-auto block text-secundary-100'>Editar</button>
+            cell: ({ row }) => <Buton onClick={() => console.log(row.original, row.original.id_rol)} center='m-auto'>Editar</Buton>
         },
         {
             accessorKey: 'Eliminar',
             header: () => <span>Eliminar</span>,
-            cell: ({ row }) => <button onClick={() => deleteRol(row.original.id_rol)} className='py-1 bg-secundary-500 hover:bg-secundary-500/90 rounded-lg px-3 w-auto m-auto block text-secundary-100'>Eliminar</button>
-
+            cell: ({ row }) => <Buton onClick={() => deleteRol(row.original.id_rol)} center='m-auto'>Eliminar</Buton>
         },
     ];
 
